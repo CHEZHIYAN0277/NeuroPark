@@ -19,7 +19,8 @@ import {
   ShoppingBag,
   Users,
   MessageCircle,
-  Building2
+  Building2,
+  Bot
 } from "lucide-react";
 import { parkingSlots, mallInfo, findNearestSlots, userLocation, type ParkingSlot } from "@/data/parkingSlots";
 
@@ -351,73 +352,146 @@ const Index = () => {
             )}
 
             {/* Quick Actions */}
-            <Card className="shadow-energy">
-              <CardHeader>
-                <CardTitle className="text-lg">Quick Actions</CardTitle>
+            <Card className="shadow-glow border-primary/10 bg-gradient-to-br from-card to-card/80 backdrop-blur">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl bg-gradient-electric bg-clip-text text-transparent flex items-center gap-2">
+                  <Zap className="h-5 w-5 text-primary" />
+                  Quick Actions
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start"
-                  onClick={() => navigate("/payment")}
-                >
-                  <DollarSign className="h-4 w-4 mr-2" />
-                  Payment & Billing
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start"
-                  onClick={() => setIsChatOpen(true)}
-                >
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  Chat Support
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start"
-                  onClick={() => navigate("/navigation")}
-                >
-                  <Navigation className="h-4 w-4 mr-2" />
-                  AR Navigation
-                </Button>
+              <CardContent className="space-y-4">
+                <div className="grid gap-3">
+                  <Button 
+                    variant="outline" 
+                    className="group w-full justify-start h-12 border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
+                    onClick={() => navigate("/payment")}
+                  >
+                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center mr-3 group-hover:bg-primary/20 transition-colors">
+                      <DollarSign className="h-4 w-4 text-primary" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-medium">Payment & Billing</p>
+                      <p className="text-xs text-muted-foreground">Manage your payments</p>
+                    </div>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="group w-full justify-start h-12 border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
+                    onClick={() => setIsChatOpen(true)}
+                  >
+                    <div className="h-8 w-8 rounded-lg bg-accent/10 flex items-center justify-center mr-3 group-hover:bg-accent/20 transition-colors">
+                      <MessageCircle className="h-4 w-4 text-accent" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-medium">AI Assistant</p>
+                      <p className="text-xs text-muted-foreground">Get instant help</p>
+                    </div>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="group w-full justify-start h-12 border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
+                    onClick={() => navigate("/navigation")}
+                  >
+                    <div className="h-8 w-8 rounded-lg bg-secondary/10 flex items-center justify-center mr-3 group-hover:bg-secondary/20 transition-colors">
+                      <Navigation className="h-4 w-4 text-secondary" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-medium">AR Navigation</p>
+                      <p className="text-xs text-muted-foreground">Find your way easily</p>
+                    </div>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
 
             {/* Mall Features */}
-            <Card className="shadow-energy">
-              <CardHeader>
-                <CardTitle className="text-lg">Mall Features</CardTitle>
+            <Card className="shadow-electric border-secondary/10 bg-gradient-to-br from-card to-secondary/5 backdrop-blur">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl bg-gradient-energy bg-clip-text text-transparent flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-secondary" />
+                  Mall Features
+                </CardTitle>
               </CardHeader>  
-              <CardContent className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 bg-primary/10 rounded-full flex items-center justify-center mt-0.5">
-                    <Building2 className="h-4 w-4 text-primary" />
+              <CardContent className="space-y-4">
+                <div className="grid gap-4">
+                  <div className="group p-4 rounded-xl bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 hover:shadow-glow transition-all duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="h-12 w-12 bg-gradient-to-br from-primary to-primary-glow rounded-xl flex items-center justify-center shadow-lg">
+                        <Building2 className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-base mb-1">Premium Mall Location</p>
+                        <p className="text-sm text-muted-foreground">Charge while you shop, dine & relax</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Badge variant="secondary" className="text-xs">5 Floors</Badge>
+                          <Badge variant="secondary" className="text-xs">200+ Stores</Badge>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium text-sm">Premium Mall Location</p>
-                    <p className="text-xs text-muted-foreground">Charge while you shop & dine</p>
+                  
+                  <div className="group p-4 rounded-xl bg-gradient-to-r from-accent/5 to-accent/10 border border-accent/20 hover:shadow-energy transition-all duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="h-12 w-12 bg-gradient-to-br from-accent to-yellow-400 rounded-xl flex items-center justify-center shadow-lg">
+                        <Zap className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-base mb-1">Ultra-Fast Charging</p>
+                        <p className="text-sm text-muted-foreground">Up to 250kW DC fast charging</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Badge variant="secondary" className="text-xs">10-80% in 30min</Badge>
+                          <Badge variant="secondary" className="text-xs">24/7 Available</Badge>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 bg-accent/10 rounded-full flex items-center justify-center mt-0.5">
-                    <Zap className="h-4 w-4 text-accent" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">Fast Charging</p>
-                    <p className="text-xs text-muted-foreground">Up to 250kW ultra-fast charging</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 bg-secondary/10 rounded-full flex items-center justify-center mt-0.5">
-                    <MessageCircle className="h-4 w-4 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">24/7 Support</p>
-                    <p className="text-xs text-muted-foreground">AI assistant & mall authority</p>
+                  
+                  <div className="group p-4 rounded-xl bg-gradient-to-r from-secondary/5 to-secondary/10 border border-secondary/20 hover:shadow-glow transition-all duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className="h-12 w-12 bg-gradient-to-br from-secondary to-purple-400 rounded-xl flex items-center justify-center shadow-lg">
+                        <MessageCircle className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-base mb-1">Smart Support System</p>
+                        <p className="text-sm text-muted-foreground">AI assistant & live mall authority</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Badge variant="secondary" className="text-xs">Instant Response</Badge>
+                          <Badge variant="secondary" className="text-xs">Multi-language</Badge>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
+
+            {/* AI Assistant Sticky */}
+            <div className="sticky top-4 z-10">
+              <Card className="shadow-glow border-primary/20 bg-gradient-to-br from-primary/5 to-primary-glow/5 backdrop-blur">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="h-10 w-10 bg-gradient-electric rounded-full flex items-center justify-center shadow-lg">
+                      <Bot className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">AI Assistant</p>
+                      <p className="text-xs text-muted-foreground">Always here to help</p>
+                    </div>
+                    <Badge className="ml-auto bg-green-500/10 text-green-600 border-green-500/20">
+                      Online
+                    </Badge>
+                  </div>
+                  <Button 
+                    onClick={() => setIsChatOpen(true)}
+                    className="w-full bg-gradient-electric hover:shadow-glow transition-all duration-300"
+                    size="sm"
+                  >
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    Start Conversation
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
