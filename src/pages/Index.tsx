@@ -465,36 +465,19 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            {/* AI Assistant Sticky */}
-            <div className="sticky top-4 z-10">
-              <Card className="shadow-glow border-primary/20 bg-gradient-to-br from-primary/5 to-primary-glow/5 backdrop-blur">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-10 w-10 bg-gradient-electric rounded-full flex items-center justify-center shadow-lg">
-                      <Bot className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-semibold">AI Assistant</p>
-                      <p className="text-xs text-muted-foreground">Always here to help</p>
-                    </div>
-                    <Badge className="ml-auto bg-green-500/10 text-green-600 border-green-500/20">
-                      Online
-                    </Badge>
-                  </div>
-                  <Button 
-                    onClick={() => setIsChatOpen(true)}
-                    className="w-full bg-gradient-electric hover:shadow-glow transition-all duration-300"
-                    size="sm"
-                  >
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    Start Conversation
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
           </div>
         </div>
       </div>
+
+      {/* Floating AI Assistant Button */}
+      <Button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-gradient-electric hover:shadow-glow shadow-electric transition-all duration-300 animate-pulse-glow z-40 group"
+        size="icon"
+      >
+        <Bot className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
+        <span className="sr-only">Open AI Assistant</span>
+      </Button>
 
       {/* Chat Interface */}
       <ChatInterface 
