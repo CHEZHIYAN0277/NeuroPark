@@ -82,6 +82,14 @@ const Index = () => {
               <ThemeToggle />
               <Button
                 variant="outline"
+                size="sm"
+                onClick={() => navigate('/login')}
+                className="px-4"
+              >
+                Login / Dashboard
+              </Button>
+              <Button
+                variant="outline"
                 size="icon"
                 onClick={() => setIsChatOpen(true)}
                 className="relative"
@@ -173,6 +181,61 @@ const Index = () => {
             </CardContent>
           </Card>
         )}
+
+        {/* AI Dynamic Pricing Card */}
+        <Card className="shadow-glow border-primary/20 mb-6 bg-gradient-to-br from-primary/5 to-primary-glow/5 backdrop-blur">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-primary">
+              <DollarSign className="h-5 w-5" />
+              AI Dynamic Pricing - Live Rates
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary/5 to-primary-glow/5 rounded-lg border border-primary/20">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">Standard Charging</span>
+                  <Badge className="bg-green-500/10 text-green-600 border-green-500/20 text-xs">
+                    Low Demand
+                  </Badge>
+                </div>
+                <div className="text-right">
+                  <span className="text-primary font-bold">$3.80/hour</span>
+                  <p className="text-xs text-muted-foreground">AI Optimized</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary/5 to-primary-glow/5 rounded-lg border border-primary/20">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">Fast Charging</span>
+                  <Badge className="bg-orange-500/10 text-orange-600 border-orange-500/20 text-xs">
+                    Medium Demand
+                  </Badge>
+                </div>
+                <div className="text-right">
+                  <span className="text-primary font-bold">$7.20/hour</span>
+                  <p className="text-xs text-muted-foreground">Peak Hours +7%</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary/5 to-primary-glow/5 rounded-lg border border-primary/20">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">Super Fast</span>
+                  <Badge className="bg-red-500/10 text-red-600 border-red-500/20 text-xs">
+                    High Demand
+                  </Badge>
+                </div>
+                <div className="text-right">
+                  <span className="text-primary font-bold">$12.45/hour</span>
+                  <p className="text-xs text-muted-foreground">Dynamic +38%</p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 p-3 bg-muted/30 rounded-lg">
+              <p className="text-xs text-muted-foreground text-center">
+                Prices update every 15 minutes based on demand, peak hours, and availability • AI-powered optimization
+              </p>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Main Content */}
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
