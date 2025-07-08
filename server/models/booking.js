@@ -1,23 +1,27 @@
+// server/models/booking.js
+
 import mongoose from 'mongoose';
 
 const bookingSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user', // matches model name in `user.js`
+    ref: 'user',
     required: true
   },
   slot: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'slot', // matches model name in `slot.js`
+    type: String, // ✅ Changed from ObjectId to String to match your custom slot ID
+    ref: 'slot',
     required: true
   },
   vehicleNumber: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   durationInMinutes: {
     type: Number,
-    required: true
+    required: true,
+    min: 1
   },
   startTime: {
     type: Date,
@@ -28,6 +32,8 @@ const bookingSchema = new mongoose.Schema({
     enum: ['active', 'cancelled', 'completed'],
     default: 'active'
   }
+}, {
+  timestamps: true
 });
 
 export default mongoose.model('booking', bookingSchema);

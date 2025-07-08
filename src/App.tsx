@@ -14,6 +14,9 @@ import LoginPage from "./pages/LoginPage";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import SlotLiveList from "./components/SlotLiveList";
+
+
 
 const queryClient = new QueryClient();
 
@@ -36,6 +39,7 @@ const App = () => (
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
+          <Route path="/slots" element={<SlotLiveList />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

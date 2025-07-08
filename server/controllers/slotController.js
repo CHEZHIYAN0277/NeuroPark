@@ -25,12 +25,18 @@ export const bookSlot = async (req, res) => {
     });
 
     slot.isAvailable = false;
+    slot.status = 'busy';
 
     await booking.save();
     await slot.save();
 
+    // Emit WebSocket update
+    const io = req.app.get('io');
+    io.emit('slotStatusUpdated', slot);
+
     res.status(201).json({ message: 'Slot booked successfully', booking });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Failed to book slot' });
   }
 };
@@ -40,18 +46,27 @@ export const cancelBooking = async (req, res) => {
     const { id } = req.params;
 
     const booking = await Booking.findById(id).populate('slot');
-    if (!booking) return res.status(404).json({ message: 'Booking not found' });
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
 
     if (booking.user.toString() !== req.user.id && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Not authorized' });
     }
 
     booking.slot.isAvailable = true;
+    booking.slot.status = 'available';
+
     await booking.slot.save();
     await booking.deleteOne();
 
+    // Emit WebSocket update
+    const io = req.app.get('io');
+    io.emit('slotStatusUpdated', booking.slot);
+
     res.json({ message: 'Booking canceled successfully' });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Failed to cancel booking' });
   }
 };

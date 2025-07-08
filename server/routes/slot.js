@@ -1,3 +1,4 @@
+// server/routes/slot.js
 import express from 'express';
 import Slot from '../models/slot.js';
 import Booking from '../models/booking.js';
@@ -17,11 +18,11 @@ router.post('/book/:slotId', verifyToken, async (req, res) => {
     if (slot.status !== 'available') return res.status(400).json({ message: 'Slot is not available' });
 
     const booking = new Booking({
-      slot: slotId,
-      userId,
+      slot: slot._id,
+      user: userId,
       vehicleNumber,
       durationInMinutes,
-      bookedAt: new Date(),
+      startTime: new Date(),
       status: 'active',
     });
 
@@ -29,6 +30,9 @@ router.post('/book/:slotId', verifyToken, async (req, res) => {
 
     slot.status = 'busy';
     await slot.save();
+
+    // ✅ Emit WebSocket update
+    req.io.emit('slotUpdated', slot);
 
     res.status(201).json({ message: 'Slot booked successfully', booking });
   } catch (error) {
@@ -54,6 +58,9 @@ router.post('/cancel/:bookingId', verifyToken, async (req, res) => {
     slot.status = 'available';
     await slot.save();
 
+    // ✅ Emit WebSocket update
+    req.io.emit('slotUpdated', slot);
+
     res.status(200).json({ message: 'Booking cancelled and slot released' });
   } catch (error) {
     console.error('Cancellation error:', error.message);
@@ -61,10 +68,7 @@ router.post('/cancel/:bookingId', verifyToken, async (req, res) => {
   }
 });
 
-export default router;
-
-
-// ✅ GET all available slots - /api/slots/available
+// ✅ Get all available slots
 router.get('/available', async (req, res) => {
   try {
     const availableSlots = await Slot.find({ status: 'available' });
@@ -75,3 +79,24 @@ router.get('/available', async (req, res) => {
   }
 });
 
+// ✅ Admin/Test: Update slot status manually
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedSlot = await Slot.findByIdAndUpdate(id, req.body, { new: true });
+
+    if (!updatedSlot) {
+      return res.status(404).json({ message: 'Slot not found' });
+    }
+
+    // ✅ Emit WebSocket update
+    req.io.emit('slotUpdated', updatedSlot);
+
+    res.json(updatedSlot);
+  } catch (err) {
+    console.error('Slot update error:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+export default router;
